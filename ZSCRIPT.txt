@@ -133,17 +133,17 @@ class HDBlackjack : HDWeapon
 			int NextSecondaryMag = sb.GetNextLoadMag(HDMagAmmo(hpl.FindInventory("HDBlackjackMagShells")));
 			if (NextSecondaryMag >= HDBlackjackMagShells.MagCapacity)
 			{
-				sb.DrawImage("BJMSA0", (-68, -3),sb. DI_SCREEN_CENTER_BOTTOM, scale: (2.0, 2.0));
+				sb.DrawImage("BJMSA0", (-60, -3),sb. DI_SCREEN_CENTER_BOTTOM, scale: (2.0, 2.0));
 			}
 			else if (NextSecondaryMag <= 0)
 			{
-				sb.DrawImage("BJMSB0", (-68, -3), sb.DI_SCREEN_CENTER_BOTTOM, alpha: NextSecondaryMag ? 0.6 : 1.0, scale: (2.0, 2.0));
+				sb.DrawImage("BJMSB0", (-60, -3), sb.DI_SCREEN_CENTER_BOTTOM, alpha: NextSecondaryMag ? 0.6 : 1.0, scale: (2.0, 2.0));
 			}
 			else
 			{
-				sb.DrawBar("BJMSNORM", "BJMSGREY", NextSecondaryMag, HDBlackjackMagShells.MagCapacity, (-68, -3), -1, sb.SHADER_VERT, sb.DI_SCREEN_CENTER_BOTTOM);
+				sb.DrawBar("BJMSNORM", "BJMSGREY", NextSecondaryMag, HDBlackjackMagShells.MagCapacity, (-60, -3), -1, sb.SHADER_VERT, sb.DI_SCREEN_CENTER_BOTTOM);
 			}
-			sb.DrawNum(hpl.CountInv("HDBlackjackMagShells"), -65, -8, sb.DI_SCREEN_CENTER_BOTTOM);
+			sb.DrawNum(hpl.CountInv("HDBlackjackMagShells"), -57, -8, sb.DI_SCREEN_CENTER_BOTTOM);
 		}
 
 		sb.DrawWepNum(hdw.WeaponStatus[BJProp_MagPrimary], HDBlackjackMag355.MagCapacity, posy: -12);
