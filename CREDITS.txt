@@ -5,4 +5,4 @@ Sprites:
 - Accensus
 
 Sounds:
-- Mag In/Mag Out/Bolt Pull: https://gamebanana.com/sounds/download/28252
+- Mag In/Mag Out/Bolt Pull: https://gamebanana.com/sounds/download/32256
