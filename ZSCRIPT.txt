@@ -630,8 +630,8 @@ class HDBlackjackMag355 : HDMagAmmo
 	Default
 	{
 		HDMagAmmo.MaxPerUnit MagCapacity;
-		HDMagAmmo.InsertTime 6;
-		HDMagAmmo.ExtractTime 4;
+		HDMagAmmo.InsertTime 7;
+		HDMagAmmo.ExtractTime 5;
 		HDMagAmmo.RoundType "HDRevolverAmmo";
 		HDMagAmmo.RoundBulk ENC_355_LOADED;
 		HDMagAmmo.MagBulk EncMagEmpty;
@@ -676,8 +676,8 @@ class HDBlackjackMagShells : HDMagAmmo
 	Default
 	{
 		HDMagAmmo.MaxPerUnit MagCapacity;
-		HDMagAmmo.InsertTime 6;
-		HDMagAmmo.ExtractTime 4;
+		HDMagAmmo.InsertTime 10;
+		HDMagAmmo.ExtractTime 8;
 		HDMagAmmo.RoundType "HDShellAmmo";
 		HDMagAmmo.RoundBulk ENC_SHELLLOADED;
 		HDMagAmmo.MagBulk EncMagEmpty;
