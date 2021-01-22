@@ -1,0 +1,6 @@
+$alias Blackjack/Fire weapons/deinoblast1
+$alias Blackjack/AltFire weapons/hunter
+Blackjack/MagIn BJCKMGIN
+Blackjack/MagOut BJCKMGOT
+Blackjack/BoltPull BJCKBOLT
+$alias Blackjack/ChamberQuick weapons/smgchamber
