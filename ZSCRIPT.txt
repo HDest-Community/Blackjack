@@ -34,8 +34,16 @@ class BlackjackHandler : StaticEventHandler
 
 	override void WorldThingSpawned(WorldEvent e)
 	{
-		let BlackjackAmmo = HDRevolverAmmo(e.Thing);
-		if (BlackjackAmmo && BlackjackAmmo.GetClassName() == 'HDRevolverAmmo')
+		let BlackjackAmmo = HDAmmo(e.Thing);
+		if (!BlackjackAmmo)
+		{
+			return;
+		}
+		if (BlackjackAmmo.GetClassName() == 'HDRevolverAmmo')
+		{
+			BlackjackAmmo.ItemsThatUseThis.Push("HDBlackjack");
+		}
+		if (BlackjackAmmo.GetClassName() == 'HDShellAmmo')
 		{
 			BlackjackAmmo.ItemsThatUseThis.Push("HDBlackjack");
 		}
@@ -67,7 +75,7 @@ class HDBlackjack : HDWeapon
 	}
 	override double WeaponBulk()
 	{
-		double BaseBulk = 110;
+		double BaseBulk = 145;
 		int MagPrim = WeaponStatus[BJProp_MagPrimary];
 		int MagSec = WeaponStatus[BJProp_MagSecondary];
 		if (MagPrim >= 0)
@@ -108,7 +116,7 @@ class HDBlackjack : HDWeapon
 
 	override string PickupMessage()
 	{
-		return String.Format("You picked up the 'Blackjack' .355 carbine.");
+		return String.Format("You picked up the 'Blackjack' .355 rifle.");
 	}
 
 	override void DrawHUDStuff(HDStatusBar sb, HDWeapon hdw, HDPlayerPawn hpl)
@@ -214,7 +222,7 @@ class HDBlackjack : HDWeapon
 		Weapon.SlotPriority 1.5;
 		HDWeapon.BarrelSize 20, 2, 3;
 		Scale 0.24;
-		Tag "Blackjack";
+		Tag "'Blackjack' .355 rifle";
 		HDWeapon.Refid "bjk";
 	}
 
@@ -263,14 +271,14 @@ class HDBlackjack : HDWeapon
 			}
 			Goto Nope;
 		RealFire:
-			BJKF A 1 Offset(0, 35)
+			BJKF A 1 Offset(0, 35) Bright
 			{
 				HDBulletActor.FireBullet(self, "HDB_355", spread: 1.25, speedfactor: 1.15);
 				A_AlertMonsters();
 				invoker.WeaponStatus[BJProp_ChamberPrimary] = 1;
 				A_StartSound("Blackjack/Fire", CHAN_WEAPON, pitch: 0.9);
 				A_ZoomRecoil(0.995);
-				A_MuzzleClimb(-frandom(0.2, 0.24), -frandom(0.30, 0.36), -frandom(0.2, 0.24),-frandom(0.30, 0.36));
+				A_MuzzleClimb(-frandom(0.3, 0.35), -frandom(0.40, 0.5), -frandom(0.3, 0.35), -frandom(0.40, 0.5));
 				A_Light1();
 			}
 			BJKG A 2
@@ -311,7 +319,7 @@ class HDBlackjack : HDWeapon
 			}
 			Goto Nope;
 		RealAltFire:
-			BJKF A 2 Offset(0, 35)
+			BJKF A 2 Offset(0, 35) Bright
 			{
 				Hunter.Fire(self, 3);
 				A_AlertMonsters();
@@ -624,7 +632,7 @@ class HDBlackjackMag355 : HDMagAmmo
 	}
 
 	const MagCapacity = 25;
-	const EncMagEmpty = 5;
+	const EncMagEmpty = 6;
 	const EncMagLoaded = EncMagEmpty * 0.9;
 
 	Default
@@ -636,7 +644,7 @@ class HDBlackjackMag355 : HDMagAmmo
 		HDMagAmmo.RoundBulk ENC_355_LOADED;
 		HDMagAmmo.MagBulk EncMagEmpty;
 		Tag "Blackjack .355 magazine";
-		Inventory.PickupMessage "Picked up a 35-round Blackjack .355 magazine.";
+		Inventory.PickupMessage "Picked up a 25-round Blackjack .355 magazine.";
 		HDPickup.RefId "bm3";
 		Scale 0.7;
 	}
@@ -670,7 +678,7 @@ class HDBlackjackMagShells : HDMagAmmo
 	}
 
 	const MagCapacity = 5;
-	const EncMagEmpty = 7;
+	const EncMagEmpty = 9;
 	const EncMagLoaded = EncMagEmpty * 0.9;
 
 	Default
