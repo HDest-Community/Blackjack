@@ -632,7 +632,7 @@ class HDBlackjackMag355 : HDMagAmmo
 	}
 
 	const MagCapacity = 25;
-	const EncMagEmpty = 6;
+	const EncMagEmpty = 12;
 	const EncMagLoaded = EncMagEmpty * 0.9;
 
 	Default
@@ -678,7 +678,7 @@ class HDBlackjackMagShells : HDMagAmmo
 	}
 
 	const MagCapacity = 5;
-	const EncMagEmpty = 9;
+	const EncMagEmpty = 14;
 	const EncMagLoaded = EncMagEmpty * 0.9;
 
 	Default
