@@ -669,7 +669,7 @@ class HDBlackjackMagShells : HDMagAmmo
 {
 	override string, string, name, double GetMagSprite(int thismagamt)
 	{
-		return (thismagamt > 0) ? "BJMSA0" : "BJMSB0", "SHELA0", "HDShellAmmo", 1.0;
+		return (thismagamt > 0) ? "BJMSA0" : "BJMSB0", "SHL1A0", "HDShellAmmo", 1.0;
 	}
 
 	override void GetItemsThatUseThis()
