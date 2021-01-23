@@ -251,7 +251,7 @@ class HDBlackjack : HDWeapon
 			BJKG A 0;
 			Goto Deselect0BFG;
 		User3:
-			BJKG A 0 A_MagManager("HDBlackjackMag");
+			BJKG A 0 A_MagManager(PressingFiremode() ? "HDBlackjackMagShells" : "HDBlackjackMag355");
 			Goto Ready;
 
 		Fire:
