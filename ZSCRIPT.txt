@@ -104,11 +104,12 @@ class HDBlackjack : HDWeapon
 
 	override string GetHelpText()
 	{
-		return WEPHELP_FIRESHOOT
+		return WEPHELP_FIRE.. "  Shoot rifle\n"
+		..WEPHELP_ALTFIRE.. "  Shoot shotgun\n"
 		..WEPHELP_RELOAD.."  Reload rifle mag\n"
 		..WEPHELP_ALTRELOAD.."  Reload shotgun mag\n"
-		..WEPHELP_UNLOAD.. " Unload rifle mag\n"
-		..WEPHELP_FIREMODE.."+"..WEPHELP_UNLOAD.. " Unload shotgun mag\n"
+		..WEPHELP_UNLOAD.. "  Unload rifle mag\n"
+		..WEPHELP_FIREMODE.."+"..WEPHELP_UNLOAD.. "  Unload shotgun mag\n"
 		..WEPHELP_USE.."+"..WEPHELP_RELOAD.."  Reload rifle chamber\n"
 		..WEPHELP_USE.."+"..WEPHELP_ALTRELOAD.."  Reload shotgun chamber\n"
 		..WEPHELP_MAGMANAGER;
