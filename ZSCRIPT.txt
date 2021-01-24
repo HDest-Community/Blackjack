@@ -67,6 +67,13 @@ class HDBlackjack : HDWeapon
 		BJProp_LoadType
 	}
 
+	override void PostBeginPlay()
+	{
+		weaponspecial = 1337; // [Ace] UaS sling compatibility.
+
+		Super.PostBeginPlay();
+	}
+
 	override bool AddSpareWeapon(actor newowner) { return AddSpareWeaponRegular(newowner); }
 	override HDWeapon GetSpareWeapon(actor newowner, bool reverse, bool doselect) { return GetSpareWeaponRegular(newowner, reverse, doselect); }
 	override double GunMass()
