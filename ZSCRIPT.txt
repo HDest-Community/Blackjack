@@ -405,7 +405,8 @@ class HDBlackjack : HDWeapon
 			BJKG A 0
 			{
 				invoker.WeaponStatus[BJProp_Flags] &= ~BJF_JustUnload;
-				if (!PressingAltReload() && invoker.WeaponStatus[BJProp_MagPrimary] >= HDBlackjackMag355.MagCapacity || PressingAltReload() && invoker.WeaponStatus[BJProp_MagSecondary] >= HDBlackjackMagShells.MagCapacity)
+				bool NoMags = HDMagAmmo.NothingLoaded(self, !PressingAltReload() ? "HDBlackjackMag355" : "HDBlackjackMagShells");
+				if (NoMags || !PressingAltReload() && invoker.WeaponStatus[BJProp_MagPrimary] >= HDBlackjackMag355.MagCapacity || PressingAltReload() && invoker.WeaponStatus[BJProp_MagSecondary] >= HDBlackjackMagShells.MagCapacity)
 				{
 					SetWeaponState("Nope");
 				}
