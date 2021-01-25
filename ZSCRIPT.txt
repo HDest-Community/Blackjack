@@ -229,7 +229,7 @@ class HDBlackjack : HDWeapon
 		Weapon.SlotNumber 4;
 		Weapon.SlotPriority 1.5;
 		HDWeapon.BarrelSize 20, 2, 3;
-		Scale 0.24;
+		Scale 0.5;
 		Tag "'Blackjack' .355 rifle";
 		HDWeapon.Refid "bjk";
 	}
@@ -654,7 +654,8 @@ class HDBlackjackMag355 : HDMagAmmo
 		Tag "Blackjack .355 magazine";
 		Inventory.PickupMessage "Picked up a 25-round Blackjack .355 magazine.";
 		HDPickup.RefId "bm3";
-		Scale 0.7;
+		XScale 0.5;
+		YScale 0.7;
 	}
 
 	States
@@ -700,7 +701,7 @@ class HDBlackjackMagShells : HDMagAmmo
 		Tag "Blackjack shell magazine";
 		Inventory.PickupMessage "Picked up a 5-round Blackjack shell magazine.";
 		HDPickup.RefId "bms";
-		Scale 0.7;
+		Scale 0.5;
 	}
 
 	States

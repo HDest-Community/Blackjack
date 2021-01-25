@@ -2,7 +2,7 @@ Code:
 - Accensus
 
 Sprites:
-- Accensus
+- Weapon model by Accensus, sprites by Mor'ladim.
 
 Sounds:
 - Mag In/Mag Out/Bolt Pull: https://gamebanana.com/sounds/download/32256
