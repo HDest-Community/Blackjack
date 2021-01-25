@@ -406,11 +406,11 @@ class HDBlackjack : HDWeapon
 			{
 				invoker.WeaponStatus[BJProp_Flags] &= ~BJF_JustUnload;
 				bool NoMags = HDMagAmmo.NothingLoaded(self, !PressingAltReload() ? "HDBlackjackMag355" : "HDBlackjackMagShells");
-				if (NoMags || !PressingAltReload() && invoker.WeaponStatus[BJProp_MagPrimary] >= HDBlackjackMag355.MagCapacity || PressingAltReload() && invoker.WeaponStatus[BJProp_MagSecondary] >= HDBlackjackMagShells.MagCapacity)
+				if (!PressingAltReload() && invoker.WeaponStatus[BJProp_MagPrimary] >= HDBlackjackMag355.MagCapacity || PressingAltReload() && invoker.WeaponStatus[BJProp_MagSecondary] >= HDBlackjackMagShells.MagCapacity)
 				{
 					SetWeaponState("Nope");
 				}
-				else if (PressingUse())
+				else if (PressingUse() || NoMags)
 				{
 					if (!PressingAltReload() && invoker.WeaponStatus[BJProp_MagPrimary] <= 0 && CheckInventory("HDRevolverAmmo", 1) || PressingAltReload() && invoker.WeaponStatus[BJProp_MagSecondary] <= 0 && CheckInventory("HDShellAmmo", 1))
 					{
