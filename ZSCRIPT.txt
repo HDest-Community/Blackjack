@@ -99,7 +99,7 @@ class HDBlackjack : HDWeapon
 	{
 		string PrimMagFrame = WeaponStatus[BJProp_MagPrimary] == -1 ? "E" : "F";
 		string SecMagFrame = WeaponStatus[BJProp_MagSecondary] == -1 ? "E" : "F";
-		return "BJ"..PrimMagFrame..SecMagFrame.."A0", 0.4;
+		return "BJ"..PrimMagFrame..SecMagFrame.."A0", 1.0;
 	}
 	override void InitializeWepStats(bool idfa)
 	{
