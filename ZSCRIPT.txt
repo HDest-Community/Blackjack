@@ -18,7 +18,7 @@ class BlackjackHandler : StaticEventHandler
 				}
 				break;
 			case 'ShellRandom':
-				if (random[bljackrand]() <= 10)
+				if (random[bljackrand]() <= 16)
 				{
 					e.Replacement = "HDBlackjackMagShells";
 				}
