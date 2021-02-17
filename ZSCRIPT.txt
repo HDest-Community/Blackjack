@@ -78,7 +78,9 @@ class HDBlackjack : HDWeapon
 	override HDWeapon GetSpareWeapon(actor newowner, bool reverse, bool doselect) { return GetSpareWeaponRegular(newowner, reverse, doselect); }
 	override double GunMass()
 	{
-		return 10 + 0.04 * WeaponStatus[BJProp_MagPrimary] + 0.08 * WeaponStatus[BJProp_MagSecondary];
+		double MagMass355 = WeaponStatus[BJProp_MagPrimary] > -1 ? 0.04 * WeaponStatus[BJProp_MagPrimary] : 0;
+		double MagMassShell = WeaponStatus[BJProp_MagSecondary] > -1 ? 0.08 * WeaponStatus[BJProp_MagSecondary] : 0;
+		return 10 + MagMass355 + MagMassShell;
 	}
 	override double WeaponBulk()
 	{
