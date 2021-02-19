@@ -286,7 +286,7 @@ class HDBlackjack : HDWeapon
 				HDBulletActor.FireBullet(self, "HDB_355", spread: 1.25, speedfactor: 1.15);
 				A_AlertMonsters();
 				invoker.WeaponStatus[BJProp_ChamberPrimary] = 1;
-				A_StartSound("Blackjack/Fire", CHAN_WEAPON, pitch: 0.9);
+				A_StartSound("Blackjack/Fire", CHAN_WEAPON, pitch: 0.75);
 				A_ZoomRecoil(0.995);
 				A_MuzzleClimb(-frandom(0.3, 0.35), -frandom(0.40, 0.5), -frandom(0.3, 0.35), -frandom(0.40, 0.5));
 				A_Light1();
