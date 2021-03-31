@@ -228,8 +228,8 @@ class HDBlackjack : HDWeapon
 	Default
 	{
 		Weapon.SelectionOrder 300;
-		Weapon.SlotNumber 4;
-		Weapon.SlotPriority 1.5;
+		Weapon.SlotNumber 2;
+		Weapon.SlotPriority 0.4;
 		HDWeapon.BarrelSize 20, 2, 3;
 		Scale 0.5;
 		Tag "'Blackjack' .355 rifle";
