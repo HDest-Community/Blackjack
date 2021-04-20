@@ -286,7 +286,7 @@ class HDBlackjack : HDWeapon
 				HDBulletActor.FireBullet(self, "HDB_355", spread: 1.25, speedfactor: 1.15);
 				A_AlertMonsters();
 				invoker.WeaponStatus[BJProp_ChamberPrimary] = 1;
-				A_StartSound("Blackjack/Fire", CHAN_WEAPON, pitch: 0.75);
+				A_StartSound("Blackjack/Fire", CHAN_WEAPON);
 				A_ZoomRecoil(0.995);
 				A_MuzzleClimb(-frandom(0.3, 0.35), -frandom(0.40, 0.5), -frandom(0.3, 0.35), -frandom(0.40, 0.5));
 				A_Light1();
@@ -382,7 +382,7 @@ class HDBlackjack : HDWeapon
 			BJKG A 1 A_JumpIf(invoker.WeaponStatus[BJProp_LoadType] == 1 && invoker.WeaponStatus[BJProp_ChamberPrimary] == 0 || invoker.WeaponStatus[BJProp_LoadType] == 2 && invoker.WeaponStatus[BJProp_ChamberSecondary] == 0, "Nope");
 			BJKG A 4 Offset(2, 34)
 			{
-				A_StartSound("Blackjack/BoltPull", 8, pitch: 1.5);
+				A_StartSound("Blackjack/BoltPull", 8);
 			}
 			BJKG A 8 Offset(1, 36)
 			{
@@ -569,7 +569,7 @@ class HDBlackjack : HDWeapon
 			BJKG A 4 Offset(3, 38);
 			BJKG A 5 Offset(4, 44)
 			{
-				A_StartSound("Blackjack/BoltPull", 8, CHANF_OVERLAP, pitch: 1.5);
+				A_StartSound("Blackjack/BoltPull", 8, CHANF_OVERLAP);
 				if (invoker.WeaponStatus[BJProp_LoadType] == 1)
 				{
 					if (invoker.WeaponStatus[BJProp_ChamberPrimary] == 1)
