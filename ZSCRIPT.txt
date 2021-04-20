@@ -689,7 +689,7 @@ class HDBlackjackMagShells : HDMagAmmo
 		ItemsThatUseThis.Push("HDBlackjack");
 	}
 
-	const MagCapacity = 5;
+	const MagCapacity = 6;
 	const EncMagEmpty = 14;
 	const EncMagLoaded = EncMagEmpty * 0.9;
 
