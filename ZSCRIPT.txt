@@ -26,7 +26,7 @@ class BlackjackHandler : EventHandler
 			case 'ClipMagPickup':
 				if (random[bljackrand]() <= 16)
 				{
-					e.Replacement = "HDBlackjackMag355";
+					e.Replacement = "HDBlackjackMag45";
 				}
 				break;
 		}
@@ -39,7 +39,7 @@ class BlackjackHandler : EventHandler
 		{
 			return;
 		}
-		if (BlackjackAmmo.GetClassName() == 'HDRevolverAmmo')
+		if (BlackjackAmmo.GetClassName() == 'HD45ACPAmmo')
 		{
 			BlackjackAmmo.ItemsThatUseThis.Push("HDBlackjack");
 		}
@@ -78,9 +78,9 @@ class HDBlackjack : HDWeapon
 	override HDWeapon GetSpareWeapon(actor newowner, bool reverse, bool doselect) { return GetSpareWeaponRegular(newowner, reverse, doselect); }
 	override double GunMass()
 	{
-		double MagMass355 = WeaponStatus[BJProp_MagPrimary] > -1 ? 0.04 * WeaponStatus[BJProp_MagPrimary] : 0;
+		double MagMass45 = WeaponStatus[BJProp_MagPrimary] > -1 ? 0.04 * WeaponStatus[BJProp_MagPrimary] : 0;
 		double MagMassShell = WeaponStatus[BJProp_MagSecondary] > -1 ? 0.08 * WeaponStatus[BJProp_MagSecondary] : 0;
-		return 10 + MagMass355 + MagMassShell;
+		return 10 + MagMass45 + MagMassShell;
 	}
 	override double WeaponBulk()
 	{
@@ -89,7 +89,7 @@ class HDBlackjack : HDWeapon
 		int MagSec = WeaponStatus[BJProp_MagSecondary];
 		if (MagPrim >= 0)
 		{
-			BaseBulk += HDBlackjackMag355.EncMagLoaded + MagPrim * ENC_355_LOADED;
+			BaseBulk += HDBlackjackMag45.EncMagLoaded + MagPrim * ENC_45ACP_LOADED;
 		}
 		if (MagSec >= 0)
 		{
@@ -106,7 +106,7 @@ class HDBlackjack : HDWeapon
 	override void InitializeWepStats(bool idfa)
 	{
 		WeaponStatus[BJProp_ChamberPrimary] = 2;
-		WeaponStatus[BJProp_MagPrimary] = HDBlackjackMag355.MagCapacity;
+		WeaponStatus[BJProp_MagPrimary] = HDBlackjackMag45.MagCapacity;
 		WeaponStatus[BJProp_ChamberSecondary] = 2;
 		WeaponStatus[BJProp_MagSecondary] = HDBlackjackMagShells.MagCapacity;
 	}
@@ -126,15 +126,15 @@ class HDBlackjack : HDWeapon
 
 	override string PickupMessage()
 	{
-		return String.Format("You picked up the 'Blackjack' .355 rifle.");
+		return String.Format("You picked up the 'Blackjack' .45 rifle.");
 	}
 
 	override void DrawHUDStuff(HDStatusBar sb, HDWeapon hdw, HDPlayerPawn hpl)
 	{
 		if (sb.HudLevel == 1)
 		{
-			int NextPrimaryMag = sb.GetNextLoadMag(HDMagAmmo(hpl.FindInventory("HDBlackjackMag355")));
-			if (NextPrimaryMag >= HDBlackjackMag355.MagCapacity)
+			int NextPrimaryMag = sb.GetNextLoadMag(HDMagAmmo(hpl.FindInventory("HDBlackjackMag45")));
+			if (NextPrimaryMag >= HDBlackjackMag45.MagCapacity)
 			{
 				sb.DrawImage("BJM3A0", (-46, -3),sb. DI_SCREEN_CENTER_BOTTOM, scale: (2.0, 2.0));
 			}
@@ -144,9 +144,9 @@ class HDBlackjack : HDWeapon
 			}
 			else
 			{
-				sb.DrawBar("BJM3NORM", "BJM3GREY", NextPrimaryMag, HDBlackjackMag355.MagCapacity, (-46, -3), -1, sb.SHADER_VERT, sb.DI_SCREEN_CENTER_BOTTOM);
+				sb.DrawBar("BJM3NORM", "BJM3GREY", NextPrimaryMag, HDBlackjackMag45.MagCapacity, (-46, -3), -1, sb.SHADER_VERT, sb.DI_SCREEN_CENTER_BOTTOM);
 			}
-			sb.DrawNum(hpl.CountInv("HDBlackjackMag355"), -43, -8, sb.DI_SCREEN_CENTER_BOTTOM);
+			sb.DrawNum(hpl.CountInv("HDBlackjackMag45"), -43, -8, sb.DI_SCREEN_CENTER_BOTTOM);
 
 			int NextSecondaryMag = sb.GetNextLoadMag(HDMagAmmo(hpl.FindInventory("HDBlackjackMagShells")));
 			if (NextSecondaryMag >= HDBlackjackMagShells.MagCapacity)
@@ -164,7 +164,7 @@ class HDBlackjack : HDWeapon
 			sb.DrawNum(hpl.CountInv("HDBlackjackMagShells"), -57, -8, sb.DI_SCREEN_CENTER_BOTTOM);
 		}
 
-		sb.DrawWepNum(hdw.WeaponStatus[BJProp_MagPrimary], HDBlackjackMag355.MagCapacity, posy: -12);
+		sb.DrawWepNum(hdw.WeaponStatus[BJProp_MagPrimary], HDBlackjackMag45.MagCapacity, posy: -12);
 		if (hdw.WeaponStatus[BJProp_ChamberPrimary] == 2)
 		{
 			sb.DrawRect(-19, -16, 3, 1);
@@ -201,14 +201,14 @@ class HDBlackjack : HDWeapon
 			double OldAngle = owner.angle;
 
 			amt = clamp(amt, 1, 10);
-			if (owner.CheckInventory("HDRevolverAmmo", 1))
+			if (owner.CheckInventory("HD45ACPAmmo", 1))
 			{
-				owner.A_DropInventory("HDRevolverAmmo", amt * 15);
+				owner.A_DropInventory("HD45ACPAmmo", amt * 15);
 				owner.angle += 15;
 			}
 			else
 			{
-				owner.A_DropInventory("HDBlackjackMag355", amt);
+				owner.A_DropInventory("HDBlackjackMag45", amt);
 				owner.angle += 15;
 			}
 
@@ -232,7 +232,7 @@ class HDBlackjack : HDWeapon
 		Weapon.SlotPriority 0.4;
 		HDWeapon.BarrelSize 20, 2, 3;
 		Scale 0.5;
-		Tag "'Blackjack' .355 rifle";
+		Tag "'Blackjack' .45 rifle";
 		HDWeapon.Refid "bjk";
 	}
 
@@ -261,11 +261,11 @@ class HDBlackjack : HDWeapon
 			BJKG A 0;
 			Goto Deselect0Big;
 		User3:
-			BJKG A 0 A_MagManager(PressingUse() ? "HDBlackjackMagShells" : "HDBlackjackMag355");
+			BJKG A 0 A_MagManager(PressingUse() ? "HDBlackjackMagShells" : "HDBlackjackMag45");
 			Goto Ready;
 
 		Fire:
-			BJKG A 1
+			BJKG A 2
 			{
 				if (invoker.WeaponStatus[BJProp_ChamberPrimary] < 2)
 				{
@@ -281,12 +281,12 @@ class HDBlackjack : HDWeapon
 			}
 			Goto Nope;
 		RealFire:
-			BJKF A 1 Offset(0, 35) Bright
+			BJKF A 2 Offset(0, 35) Bright
 			{
-				HDBulletActor.FireBullet(self, "HDB_355", spread: 1.25, speedfactor: 1.15);
+				HDBulletActor.FireBullet(self, "HDB_45ACP", spread: 1.25, speedfactor: 1.15);
 				A_AlertMonsters();
 				invoker.WeaponStatus[BJProp_ChamberPrimary] = 1;
-				A_StartSound("Blackjack/Fire", CHAN_WEAPON);
+				A_StartSound("Blackjack/Fire", CHAN_WEAPON, pitch: 0.75);
 				A_ZoomRecoil(0.995);
 				A_MuzzleClimb(-frandom(0.3, 0.35), -frandom(0.40, 0.5), -frandom(0.3, 0.35), -frandom(0.40, 0.5));
 				A_Light1();
@@ -295,7 +295,7 @@ class HDBlackjack : HDWeapon
 			{
 				if (invoker.WeaponStatus[BJProp_ChamberPrimary] == 1)
 				{
-					A_SpawnItemEx("HDSpent355", cos(pitch) * 10, 0, height - 10 - sin(pitch) * 10, vel.x, vel.y, vel.z, 0, SXF_ABSOLUTEMOMENTUM | SXF_NOCHECKPOSITION | SXF_TRANSFERPITCH);
+					A_SpawnItemEx("HDSpent45ACP", cos(pitch) * 10, 0, height - 10 - sin(pitch) * 10, vel.x, vel.y, vel.z, 0, SXF_ABSOLUTEMOMENTUM | SXF_NOCHECKPOSITION | SXF_TRANSFERPITCH);
 					invoker.WeaponStatus[BJProp_ChamberPrimary] = 0;
 				}
 
@@ -382,13 +382,13 @@ class HDBlackjack : HDWeapon
 			BJKG A 1 A_JumpIf(invoker.WeaponStatus[BJProp_LoadType] == 1 && invoker.WeaponStatus[BJProp_ChamberPrimary] == 0 || invoker.WeaponStatus[BJProp_LoadType] == 2 && invoker.WeaponStatus[BJProp_ChamberSecondary] == 0, "Nope");
 			BJKG A 4 Offset(2, 34)
 			{
-				A_StartSound("Blackjack/BoltPull", 8);
+				A_StartSound("Blackjack/BoltPull", 8, pitch: 1.5);
 			}
 			BJKG A 8 Offset(1, 36)
 			{
 				if (invoker.WeaponStatus[BJProp_LoadType] == 1)
 				{
-					class<Actor> Which = invoker.WeaponStatus[BJProp_ChamberPrimary] > 1 ? "HDRevolverAmmo" : "HDSpent355";
+					class<Actor> Which = invoker.WeaponStatus[BJProp_ChamberPrimary] > 1 ? "HD45ACPAmmo" : "HDSpent45ACP";
 					A_SpawnItemEx(Which, cos(pitch) * 10, 0, height - 8 - sin(pitch) * 10, vel.x, vel.y, vel.z, 0, SXF_ABSOLUTEMOMENTUM | SXF_NOCHECKPOSITION | SXF_TRANSFERPITCH);
 					invoker.WeaponStatus[BJProp_ChamberPrimary] = 0;
 				}
@@ -407,14 +407,14 @@ class HDBlackjack : HDWeapon
 			BJKG A 0
 			{
 				invoker.WeaponStatus[BJProp_Flags] &= ~BJF_JustUnload;
-				bool NoMags = HDMagAmmo.NothingLoaded(self, !PressingAltReload() ? "HDBlackjackMag355" : "HDBlackjackMagShells");
-				if (!PressingAltReload() && invoker.WeaponStatus[BJProp_MagPrimary] >= HDBlackjackMag355.MagCapacity || PressingAltReload() && invoker.WeaponStatus[BJProp_MagSecondary] >= HDBlackjackMagShells.MagCapacity)
+				bool NoMags = HDMagAmmo.NothingLoaded(self, !PressingAltReload() ? "HDBlackjackMag45" : "HDBlackjackMagShells");
+				if (!PressingAltReload() && invoker.WeaponStatus[BJProp_MagPrimary] >= HDBlackjackMag45.MagCapacity || PressingAltReload() && invoker.WeaponStatus[BJProp_MagSecondary] >= HDBlackjackMagShells.MagCapacity)
 				{
 					SetWeaponState("Nope");
 				}
 				else if (PressingUse() || NoMags)
 				{
-					if (!PressingAltReload() && invoker.WeaponStatus[BJProp_MagPrimary] <= 0 && CheckInventory("HDRevolverAmmo", 1) || PressingAltReload() && invoker.WeaponStatus[BJProp_MagSecondary] <= 0 && CheckInventory("HDShellAmmo", 1))
+					if (!PressingAltReload() && invoker.WeaponStatus[BJProp_MagPrimary] <= 0 && CheckInventory("HD45ACPAmmo", 1) || PressingAltReload() && invoker.WeaponStatus[BJProp_MagSecondary] <= 0 && CheckInventory("HDShellAmmo", 1))
 					{
 						SetWeaponState("LoadChamber");
 					}
@@ -428,7 +428,7 @@ class HDBlackjack : HDWeapon
 			Goto UnMag;
 		LoadChamber:
 			BJKG A 0 A_JumpIf(!PressingAltReload() && invoker.WeaponStatus[BJProp_ChamberPrimary] > 0 || PressingAltReload() && invoker.WeaponStatus[BJProp_ChamberSecondary] > 0, "Nope");
-			BJKG A 0 A_JumpIf(!PressingAltReload() && !CheckInventory("HDRevolverAmmo", 1) || PressingAltReload() && !CheckInventory("HDShellAmmo", 1), "Nope");
+			BJKG A 0 A_JumpIf(!PressingAltReload() && !CheckInventory("HD45ACPAmmo", 1) || PressingAltReload() && !CheckInventory("HDShellAmmo", 1), "Nope");
 			BJKG A 1 Offset(0, 34) A_StartSound("weapons/pocket", 9);
 			BJKG A 1 Offset(2, 36);
 			BJKG A 1 Offset(2, 44);
@@ -437,9 +437,9 @@ class HDBlackjack : HDWeapon
 			BJKG A 6 Offset(8, 70);
 			BJKG A 5 Offset(8, 77)
 			{
-				if (invoker.WeaponStatus[BJProp_LoadType] == 1 && CheckInventory("HDRevolverAmmo", 1))
+				if (invoker.WeaponStatus[BJProp_LoadType] == 1 && CheckInventory("HD45ACPAmmo", 1))
 				{
-					A_TakeInventory("HDRevolverAmmo", 1, TIF_NOTAKEINFINITE);
+					A_TakeInventory("HD45ACPAmmo", 1, TIF_NOTAKEINFINITE);
 					invoker.WeaponStatus[BJProp_ChamberPrimary] = 2;
 					A_StartSound("Blackjack/ChamberQuick", 8);
 				}
@@ -482,14 +482,14 @@ class HDBlackjack : HDWeapon
 					}
 
 					invoker.WeaponStatus[BJProp_MagPrimary] = -1;
-					if ((!PressingUnload() && !PressingReload()) || A_JumpIfInventory("HDBlackjackMag355", 0, "Null"))
+					if ((!PressingUnload() && !PressingReload()) || A_JumpIfInventory("HDBlackjackMag45", 0, "Null"))
 					{
-						HDMagAmmo.SpawnMag(self, "HDBlackjackMag355", MagAmount);
+						HDMagAmmo.SpawnMag(self, "HDBlackjackMag45", MagAmount);
 						SetWeaponState("MagOut");
 					}
 					else
 					{
-						HDMagAmmo.GiveMag(self, "HDBlackjackMag355", MagAmount);
+						HDMagAmmo.GiveMag(self, "HDBlackjackMag45", MagAmount);
 						A_StartSound("weapons/pocket", 9);
 						SetWeaponState("PocketMag");
 					}
@@ -536,7 +536,7 @@ class HDBlackjack : HDWeapon
 			{
 				if (invoker.WeaponStatus[BJProp_LoadType] == 1)
 				{
-					let Mag = HDMagAmmo(FindInventory("HDBlackjackMag355"));
+					let Mag = HDMagAmmo(FindInventory("HDBlackjackMag45"));
 					if (Mag)
 					{
 						invoker.WeaponStatus[BJProp_MagPrimary] = Mag.TakeMag(true);
@@ -569,12 +569,12 @@ class HDBlackjack : HDWeapon
 			BJKG A 4 Offset(3, 38);
 			BJKG A 5 Offset(4, 44)
 			{
-				A_StartSound("Blackjack/BoltPull", 8, CHANF_OVERLAP);
+				A_StartSound("Blackjack/BoltPull", 8, CHANF_OVERLAP, pitch: 1.5);
 				if (invoker.WeaponStatus[BJProp_LoadType] == 1)
 				{
 					if (invoker.WeaponStatus[BJProp_ChamberPrimary] == 1)
 					{
-						A_SpawnItemEx("HDSpent355", cos(pitch) * 10, 0, height - 10 - sin(pitch) * 10, vel.x, vel.y, vel.z, 0, SXF_ABSOLUTEMOMENTUM | SXF_NOCHECKPOSITION | SXF_TRANSFERPITCH);
+						A_SpawnItemEx("HDSpent45ACP", cos(pitch) * 10, 0, height - 10 - sin(pitch) * 10, vel.x, vel.y, vel.z, 0, SXF_ABSOLUTEMOMENTUM | SXF_NOCHECKPOSITION | SXF_TRANSFERPITCH);
 						invoker.WeaponStatus[BJProp_ChamberPrimary] = 0;
 					}
 
@@ -609,7 +609,7 @@ class BlackjackRandom : IdleDummy
 		Spawn:
 			TNT1 A 0 NoDelay
 			{
-				A_SpawnItemEx("HDBlackjackMag355", -3,flags: SXF_NOCHECKPOSITION);
+				A_SpawnItemEx("HDBlackjackMag45", -3,flags: SXF_NOCHECKPOSITION);
 				A_SpawnItemEx("HDBlackjackMagShells", 6,flags: SXF_NOCHECKPOSITION);
 				let wpn = HDBlackjack(Spawn("HDBlackjack", pos, ALLOW_REPLACE));
 				if (!wpn)
@@ -630,11 +630,11 @@ class BlackjackRandom : IdleDummy
 }
 
 
-class HDBlackjackMag355 : HDMagAmmo
+class HDBlackjackMag45 : HDMagAmmo
 {
 	override string, string, name, double GetMagSprite(int thismagamt)
 	{
-		return (thismagamt > 0) ? "BJM3A0" : "BJM3B0", "PRNDA0", "HDRevolverAmmo", 1.0;
+		return (thismagamt > 0) ? "BJM3A0" : "BJM3B0", "PRNDA0", "HD45ACPAmmo", 1.0;
 	}
 
 	override void GetItemsThatUseThis()
@@ -651,12 +651,12 @@ class HDBlackjackMag355 : HDMagAmmo
 		HDMagAmmo.MaxPerUnit MagCapacity;
 		HDMagAmmo.InsertTime 7;
 		HDMagAmmo.ExtractTime 5;
-		HDMagAmmo.RoundType "HDRevolverAmmo";
-		HDMagAmmo.RoundBulk ENC_355_LOADED;
+		HDMagAmmo.RoundType "HD45ACPAmmo";
+		HDMagAmmo.RoundBulk ENC_45ACP_LOADED;
 		HDMagAmmo.MagBulk EncMagEmpty;
-		Tag "Blackjack .355 magazine";
-		Inventory.PickupMessage "Picked up a 25-round Blackjack .355 magazine.";
-		HDPickup.RefId "bm3";
+		Tag "Blackjack .45 magazine";
+		Inventory.PickupMessage "Picked up a 25-round Blackjack .45 magazine.";
+		HDPickup.RefId "bm4";
 		XScale 0.5;
 		YScale 0.7;
 	}
