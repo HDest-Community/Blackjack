@@ -74,6 +74,15 @@ class HDBlackjack : HDWeapon
 		Super.PostBeginPlay();
 	}
 
+	override void DoEffect()
+	{
+		if (!InvertFire)
+		{
+			InvertFire = CVar.GetCVar('bj_invert', owner.player);
+		}
+		Super.DoEffect();
+	}
+
 	override bool AddSpareWeapon(actor newowner) { return AddSpareWeaponRegular(newowner); }
 	override HDWeapon GetSpareWeapon(actor newowner, bool reverse, bool doselect) { return GetSpareWeaponRegular(newowner, reverse, doselect); }
 	override double GunMass()
@@ -113,15 +122,18 @@ class HDBlackjack : HDWeapon
 
 	override string GetHelpText()
 	{
-		return WEPHELP_FIRE.. "  Shoot rifle\n"
-		..WEPHELP_ALTFIRE.. "  Shoot shotgun\n"
-		..WEPHELP_RELOAD.."  Reload rifle mag\n"
-		..WEPHELP_ALTRELOAD.."  Reload shotgun mag\n"
-		..WEPHELP_UNLOAD.. "  Unload rifle mag\n"
-		..WEPHELP_FIREMODE.."+"..WEPHELP_UNLOAD.. "  Unload shotgun mag\n"
-		..WEPHELP_USE.."+"..WEPHELP_RELOAD.."  Reload rifle chamber\n"
-		..WEPHELP_USE.."+"..WEPHELP_ALTRELOAD.."  Reload shotgun chamber\n"
-		.."("..WEPHELP_USE..")+"..WEPHELP_MAGMANAGER;
+		string prim = InvertFire.GetBool() ? "shotgun" : "rifle";
+		string sec = InvertFire.GetBool() ? "rifle" : "shotgun";
+
+		return String.Format(WEPHELP_FIRE.. "  Shoot "..prim.."\n"
+		..WEPHELP_ALTFIRE.. "  Shoot "..sec.."\n"
+		..WEPHELP_RELOAD.."  Reload "..prim.." mag\n"
+		..WEPHELP_ALTRELOAD.."  Reload "..sec.." mag\n"
+		..WEPHELP_UNLOAD.. "  Unload "..prim.." mag\n"
+		..WEPHELP_FIREMODE.."+"..WEPHELP_UNLOAD.. "  Unload "..sec.." mag\n"
+		..WEPHELP_USE.."+"..WEPHELP_RELOAD.."  Reload "..prim.." chamber\n"
+		..WEPHELP_USE.."+"..WEPHELP_ALTRELOAD.."  Reload "..sec.." chamber\n"
+		.."("..WEPHELP_USE..")+"..WEPHELP_MAGMANAGER);
 	}
 
 	override string PickupMessage()
@@ -225,6 +237,38 @@ class HDBlackjack : HDWeapon
 		}
 	}
 
+	private action void A_FirePrimary()
+	{
+		if (invoker.WeaponStatus[BJProp_ChamberPrimary] < 2)
+		{
+			invoker.WeaponStatus[BJProp_LoadType] = 1;
+			SetWeaponState("ChamberManual");
+			return;
+		}
+		else
+		{
+			SetWeaponState("RealFire");
+			return;
+		}
+	}
+
+	private action void A_FireSecondary()
+	{
+		if (invoker.WeaponStatus[BJProp_ChamberSecondary] < 2)
+		{
+			invoker.WeaponStatus[BJProp_LoadType] = 2;
+			SetWeaponState("ChamberManual");
+			return;
+		}
+		else
+		{
+			SetWeaponState("RealAltFire");
+			return;
+		}
+	}
+
+	private transient CVar InvertFire;
+
 	Default
 	{
 		Weapon.SelectionOrder 300;
@@ -261,22 +305,22 @@ class HDBlackjack : HDWeapon
 			BJKG A 0;
 			Goto Deselect0Big;
 		User3:
-			BJKG A 0 A_MagManager(PressingUse() ? "HDBlackjackMagShells" : "HDBlackjackMag355");
+			BJKG A 0
+			{
+				A_MagManager(PressingUse()  ? "HDBlackjackMagShells" : "HDBlackjackMag355");
+			}
 			Goto Ready;
 
 		Fire:
 			BJKG A 1
 			{
-				if (invoker.WeaponStatus[BJProp_ChamberPrimary] < 2)
+				if (invoker.InvertFire.GetBool())
 				{
-					invoker.WeaponStatus[BJProp_LoadType] = 1;
-					SetWeaponState("ChamberManual");
-					return;
+					A_FireSecondary();
 				}
 				else
 				{
-					SetWeaponState("RealFire");
-					return;
+					A_FirePrimary();
 				}
 			}
 			Goto Nope;
@@ -315,16 +359,13 @@ class HDBlackjack : HDWeapon
 		AltFire:
 			BJKG A 1
 			{
-				if (invoker.WeaponStatus[BJProp_ChamberSecondary] < 2)
+				if (invoker.InvertFire.GetBool())
 				{
-					invoker.WeaponStatus[BJProp_LoadType] = 2;
-					SetWeaponState("ChamberManual");
-					return;
+					A_FirePrimary();
 				}
 				else
 				{
-					SetWeaponState("RealAltFire");
-					return;
+					A_FireSecondary();
 				}
 			}
 			Goto Nope;
@@ -366,13 +407,16 @@ class HDBlackjack : HDWeapon
 		Unload:
 			BJKG A 0
 			{
+				bool invert = invoker.InvertFire.GetBool();
+				bool sec = PressingFiremode() || invert;
+
 				invoker.WeaponStatus[BJProp_Flags] |= BJF_JustUnload;
-				invoker.WeaponStatus[BJProp_LoadType] = !PressingFiremode() ? 1 : 2;
-				if (!PressingFiremode() && invoker.WeaponStatus[BJProp_MagPrimary] >= 0 || PressingFiremode() && invoker.WeaponStatus[BJProp_MagSecondary] >= 0)
+				invoker.WeaponStatus[BJProp_LoadType] = sec ? 2 : 1;
+				if (!sec && invoker.WeaponStatus[BJProp_MagPrimary] >= 0 || sec && invoker.WeaponStatus[BJProp_MagSecondary] >= 0)
 				{
 					SetWeaponState("UnMag");
 				}
-				else if (!PressingFiremode() && invoker.WeaponStatus[BJProp_ChamberPrimary] > 0 || PressingFiremode() && invoker.WeaponStatus[BJProp_ChamberSecondary] > 0)
+				else if (!sec && invoker.WeaponStatus[BJProp_ChamberPrimary] > 0 || sec && invoker.WeaponStatus[BJProp_ChamberSecondary] > 0)
 				{
 					SetWeaponState("UnloadChamber");
 				}
@@ -406,15 +450,23 @@ class HDBlackjack : HDWeapon
 		AltReload:
 			BJKG A 0
 			{
+				bool invert = invoker.InvertFire.GetBool();
+
 				invoker.WeaponStatus[BJProp_Flags] &= ~BJF_JustUnload;
-				bool NoMags = HDMagAmmo.NothingLoaded(self, !PressingAltReload() ? "HDBlackjackMag355" : "HDBlackjackMagShells");
-				if (!PressingAltReload() && invoker.WeaponStatus[BJProp_MagPrimary] >= HDBlackjackMag355.MagCapacity || PressingAltReload() && invoker.WeaponStatus[BJProp_MagSecondary] >= HDBlackjackMagShells.MagCapacity)
+				bool sec = !invert && PressingAltReload() || invert && !PressingAltReload();
+				bool NoMags = HDMagAmmo.NothingLoaded(self, sec ? "HDBlackjackMagShells" : "HDBlackjackMag355");
+				int magPrim = invoker.WeaponStatus[BJProp_MagPrimary];
+				int magSec = invoker.WeaponStatus[BJProp_MagSecondary];
+				int chPrim = invoker.WeaponStatus[BJProp_ChamberPrimary];
+				int chSec = invoker.WeaponStatus[BJProp_ChamberSecondary];
+
+				if (!sec && magPrim >= HDBlackjackMag355.MagCapacity || sec && magSec >= HDBlackjackMagShells.MagCapacity)
 				{
 					SetWeaponState("Nope");
 				}
 				else if (PressingUse() || NoMags)
 				{
-					if (!PressingAltReload() && invoker.WeaponStatus[BJProp_MagPrimary] <= 0 && CheckInventory("HDRevolverAmmo", 1) || PressingAltReload() && invoker.WeaponStatus[BJProp_MagSecondary] <= 0 && CheckInventory("HDShellAmmo", 1))
+					if (!sec && (magPrim <= 0 || chPrim < 2) && CheckInventory("HDRevolverAmmo", 1) || sec && (magSec <= 0 || chSec < 2) && CheckInventory("HDShellAmmo", 1))
 					{
 						SetWeaponState("LoadChamber");
 					}
@@ -423,12 +475,10 @@ class HDBlackjack : HDWeapon
 						SetWeaponState("Nope");
 					}
 				}
-				invoker.WeaponStatus[BJProp_LoadType] = !PressingAltReload() ? 1 : 2;
+				invoker.WeaponStatus[BJProp_LoadType] = sec ? 2 : 1;
 			}
 			Goto UnMag;
 		LoadChamber:
-			BJKG A 0 A_JumpIf(!PressingAltReload() && invoker.WeaponStatus[BJProp_ChamberPrimary] > 0 || PressingAltReload() && invoker.WeaponStatus[BJProp_ChamberSecondary] > 0, "Nope");
-			BJKG A 0 A_JumpIf(!PressingAltReload() && !CheckInventory("HDRevolverAmmo", 1) || PressingAltReload() && !CheckInventory("HDShellAmmo", 1), "Nope");
 			BJKG A 1 Offset(0, 34) A_StartSound("weapons/pocket", 9);
 			BJKG A 1 Offset(2, 36);
 			BJKG A 1 Offset(2, 44);
