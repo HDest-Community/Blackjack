@@ -122,6 +122,10 @@ class HDBlackjack : HDWeapon
 
 	override string GetHelpText()
 	{
+		if (!InvertFire)
+		{
+			InvertFire = CVar.GetCVar('bj_invert', owner.player);
+		}
 		string prim = InvertFire.GetBool() ? "shotgun" : "rifle";
 		string sec = InvertFire.GetBool() ? "rifle" : "shotgun";
 
