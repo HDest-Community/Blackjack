@@ -470,7 +470,7 @@ class HDBlackjack : HDWeapon
 				}
 				else if (PressingUse() || NoMags)
 				{
-					if (!sec && (magPrim <= 0 || chPrim < 2) && CheckInventory("HDRevolverAmmo", 1) || sec && (magSec <= 0 || chSec < 2) && CheckInventory("HDShellAmmo", 1))
+					if (!sec && chPrim < 1 && CheckInventory("HDRevolverAmmo", 1) || sec && chSec < 1 && CheckInventory("HDShellAmmo", 1))
 					{
 						SetWeaponState("LoadChamber");
 					}
@@ -588,23 +588,13 @@ class HDBlackjack : HDWeapon
 			BJKG A 10 offset(32, 50);
 			BJKG A 3 offset(32, 49)
 			{
-				if (invoker.WeaponStatus[BJProp_LoadType] == 1)
+				class<Inventory> whichCls = invoker.WeaponStatus[BJProp_LoadType] == 2 ? 'HDBlackjackMagShells' : 'HDBlackjackMag355';
+				int whichIndex = invoker.WeaponStatus[BJProp_LoadType] == 2 ? BJProp_MagSecondary : BJProp_MagPrimary;
+				let Mag = HDMagAmmo(FindInventory(whichCls));
+				if (Mag)
 				{
-					let Mag = HDMagAmmo(FindInventory("HDBlackjackMag355"));
-					if (Mag)
-					{
-						invoker.WeaponStatus[BJProp_MagPrimary] = Mag.TakeMag(true);
-						A_StartSound("Blackjack/MagIn", 8, CHANF_OVERLAP);
-					}
-				}
-				else if (invoker.WeaponStatus[BJProp_LoadType] == 2)
-				{
-					let Mag = HDMagAmmo(FindInventory("HDBlackjackMagShells"));
-					if (Mag)
-					{
-						invoker.WeaponStatus[BJProp_MagSecondary] = Mag.TakeMag(true);
-						A_StartSound("Blackjack/MagIn", 8, CHANF_OVERLAP);
-					}
+					invoker.WeaponStatus[whichIndex] = Mag.TakeMag(true);
+					A_StartSound("Blackjack/MagIn", 8, CHANF_OVERLAP);
 				}
 			}
 			Goto ReloadEnd;
