@@ -412,7 +412,7 @@ class HDBlackjack : HDWeapon
 			BJKG A 0
 			{
 				bool invert = invoker.InvertFire.GetBool();
-				bool sec = PressingFiremode() || invert;
+				bool sec = PressingFiremode() && !invert || !PressingFiremode() && invert;
 
 				invoker.WeaponStatus[BJProp_Flags] |= BJF_JustUnload;
 				invoker.WeaponStatus[BJProp_LoadType] = sec ? 2 : 1;
