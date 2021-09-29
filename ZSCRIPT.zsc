@@ -311,7 +311,9 @@ class HDBlackjack : HDWeapon
 		User3:
 			BJKG A 0
 			{
-				A_MagManager(PressingUse()  ? "HDBlackjackMagShells" : "HDBlackjackMag355");
+				bool invert = invoker.InvertFire.GetBool();
+				bool sec = !invert && PressingUse() || invert && !PressingUse();
+				A_MagManager(sec  ? "HDBlackjackMagShells" : "HDBlackjackMag355");
 			}
 			Goto Ready;
 
