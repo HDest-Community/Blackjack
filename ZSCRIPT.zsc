@@ -345,7 +345,7 @@ class HDBlackjack : HDWeapon
 			{
 				if (invoker.WeaponStatus[BJProp_ChamberPrimary] == 1)
 				{
-					A_SpawnItemEx("HDSpent355", cos(pitch) * 10, 0, height - 10 - sin(pitch) * 10, vel.x, vel.y, vel.z, 0, SXF_ABSOLUTEMOMENTUM | SXF_NOCHECKPOSITION | SXF_TRANSFERPITCH);
+					A_EjectCasing('HDSpent355', 6, -random(79, 81), frandom(6.0, 6.5));
 					invoker.WeaponStatus[BJProp_ChamberPrimary] = 0;
 				}
 
@@ -376,7 +376,7 @@ class HDBlackjack : HDWeapon
 			}
 			Goto Nope;
 		RealAltFire:
-			BJKF A 2 Offset(0, 35) Bright
+			BJKF B 2 Offset(0, 35) Bright
 			{
 				Hunter.Fire(self, 3);
 				A_AlertMonsters();
@@ -390,7 +390,7 @@ class HDBlackjack : HDWeapon
 			{
 				if (invoker.WeaponStatus[BJProp_ChamberSecondary] == 1)
 				{
-					A_SpawnItemEx("HDSpentShell", cos(pitch) * 8, 0, height - 7 - sin(pitch) * 8, vel.x + cos(pitch) * cos(angle - random(86, 90)) * 5, vel.y + cos(pitch) * sin(angle - random(86, 90)) * 5, vel.z + sin(pitch) * random(4, 6), 0, SXF_ABSOLUTEMOMENTUM | SXF_NOCHECKPOSITION | SXF_TRANSFERPITCH);
+					A_EjectCasing('HDSpentShell', 11, -random(79, 81), frandom(6.0, 6.5));
 					invoker.WeaponStatus[BJProp_ChamberSecondary] = 0;
 				}
 
@@ -620,7 +620,7 @@ class HDBlackjack : HDWeapon
 				{
 					if (invoker.WeaponStatus[BJProp_ChamberPrimary] == 1)
 					{
-						A_SpawnItemEx("HDSpent355", cos(pitch) * 10, 0, height - 10 - sin(pitch) * 10, vel.x, vel.y, vel.z, 0, SXF_ABSOLUTEMOMENTUM | SXF_NOCHECKPOSITION | SXF_TRANSFERPITCH);
+						A_EjectCasing('HDSpent355', 6, -random(79, 81), frandom(6.0, 6.5));
 						invoker.WeaponStatus[BJProp_ChamberPrimary] = 0;
 					}
 
@@ -631,7 +631,7 @@ class HDBlackjack : HDWeapon
 				{
 					if (invoker.WeaponStatus[BJProp_ChamberSecondary] == 1)
 					{
-						A_SpawnItemEx("HDSpentShell", cos(pitch) * 8, 0, height - 7 - sin(pitch) * 8, vel.x + cos(pitch) * cos(angle - random(86, 90)) * 5, vel.y + cos(pitch) * sin(angle - random(86, 90)) * 5, vel.z + sin(pitch) * random(4, 6), 0, SXF_ABSOLUTEMOMENTUM | SXF_NOCHECKPOSITION | SXF_TRANSFERPITCH);
+						A_EjectCasing('HDSpentShell', 11, -random(79, 81), frandom(6.0, 6.5));
 						invoker.WeaponStatus[BJProp_ChamberSecondary] = 0;
 					}
 

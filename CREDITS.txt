@@ -2,7 +2,8 @@ Code:
 - Accensus
 
 Sprites:
-- Weapon model by Accensus, sprites by Mor'ladim.
+- Weapon model for pickup sprite by Accensus. Actual pickup sprite by Mor'ladim.
+- First person sprites by Sonik.o.fan, edited by Icarus.
 
 Sounds:
 - Mag In/Mag Out/Bolt Pull: https://gamebanana.com/sounds/download/32256
