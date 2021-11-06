@@ -331,7 +331,7 @@ class HDBlackjack : HDWeapon
 			}
 			Goto Nope;
 		RealFire:
-			BJKF A 1 Offset(0, 35) Bright
+			BJKF A 1 Bright
 			{
 				HDBulletActor.FireBullet(self, "HDB_355", spread: 1.25, speedfactor: 1.15);
 				A_AlertMonsters();
@@ -341,7 +341,7 @@ class HDBlackjack : HDWeapon
 				A_MuzzleClimb(-frandom(0.3, 0.35), -frandom(0.40, 0.5), -frandom(0.3, 0.35), -frandom(0.40, 0.5));
 				A_Light1();
 			}
-			BJKG A 2
+			BJKG A 2 Offset(0, 35)
 			{
 				if (invoker.WeaponStatus[BJProp_ChamberPrimary] == 1)
 				{
@@ -376,7 +376,7 @@ class HDBlackjack : HDWeapon
 			}
 			Goto Nope;
 		RealAltFire:
-			BJKF B 2 Offset(0, 35) Bright
+			BJKF B 1 Bright
 			{
 				Hunter.Fire(self, 3);
 				A_AlertMonsters();
@@ -386,7 +386,7 @@ class HDBlackjack : HDWeapon
 				A_MuzzleClimb(-frandom(1, 1.2), -frandom(1.5, 2.0), -frandom(1, 1.2), -frandom(1.5, 2.0));
 				A_Light1();
 			}
-			BJKG A 0
+			BJKG A 1 Offset(0, 39)
 			{
 				if (invoker.WeaponStatus[BJProp_ChamberSecondary] == 1)
 				{
