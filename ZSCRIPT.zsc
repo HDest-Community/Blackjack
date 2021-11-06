@@ -341,7 +341,7 @@ class HDBlackjack : HDWeapon
 				A_MuzzleClimb(-frandom(0.3, 0.35), -frandom(0.40, 0.5), -frandom(0.3, 0.35), -frandom(0.40, 0.5));
 				A_Light1();
 			}
-			BJKG A 2 Offset(0, 35)
+			BJKG A 2 Offset(0, 36)
 			{
 				if (invoker.WeaponStatus[BJProp_ChamberPrimary] == 1)
 				{
