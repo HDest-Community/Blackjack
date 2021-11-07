@@ -180,13 +180,19 @@ class HDBlackjack : HDWeapon
 			sb.DrawNum(hpl.CountInv("HDBlackjackMagShells"), -57, -8, sb.DI_SCREEN_CENTER_BOTTOM);
 		}
 
-		sb.DrawWepNum(hdw.WeaponStatus[BJProp_MagPrimary], HDBlackjackMag355.MagCapacity, posy: -12);
+		if (hdw.WeaponStatus[BJProp_MagPrimary] > 0)
+		{
+			sb.DrawWepNum(hdw.WeaponStatus[BJProp_MagPrimary], HDBlackjackMag355.MagCapacity, posy: -12);
+		}
 		if (hdw.WeaponStatus[BJProp_ChamberPrimary] == 2)
 		{
 			sb.DrawRect(-19, -16, 3, 1);
 		}
 
-		sb.DrawWepNum(hdw.WeaponStatus[BJProp_MagSecondary], HDBlackjackMagShells.MagCapacity, posy: -4);
+		if (hdw.WeaponStatus[BJProp_MagSecondary] > 0)
+		{
+			sb.DrawWepNum(hdw.WeaponStatus[BJProp_MagSecondary], HDBlackjackMagShells.MagCapacity, posy: -4);
+		}
 		if (hdw.WeaponStatus[BJProp_ChamberSecondary] == 2)
 		{
 			sb.DrawRect(-24, -10, 5, 3);
