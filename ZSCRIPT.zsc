@@ -440,7 +440,7 @@ class HDBlackjack : HDWeapon
 			{
 				A_StartSound("Blackjack/BoltPull", 8);
 			}
-			BJKG A 8 Offset(1, 36)
+			BJKG A 6 Offset(1, 36)
 			{
 				if (invoker.WeaponStatus[BJProp_LoadType] == 1)
 				{
@@ -522,16 +522,16 @@ class HDBlackjack : HDWeapon
 			Goto Nope;
 
 		UnMag:
-			BJKG A 2 Offset(0, 34);
-			BJKG A 2 Offset(5, 38);
-			BJKG A 2 Offset(10, 42);
-			BJKG A 4 Offset(20, 46)
+			BJKG A 1 Offset(0, 34);
+			BJKG A 1 Offset(5, 38);
+			BJKG A 1 Offset(10, 42);
+			BJKG A 3 Offset(20, 46) A_MuzzleClimb(0.3, 0.4);
+			BJKG A 2 Offset(26, 52) A_MuzzleClimb(0.3, 0.4);
+			BJKG A 2 Offset(26, 54)
 			{
 				A_StartSound("Blackjack/MagOut", 8);
 				A_MuzzleClimb(0.3, 0.4);
 			}
-			BJKG A 2 Offset(26, 52) A_MuzzleClimb(0.3, 0.4);
-			BJKG A 2 Offset(26, 54) A_MuzzleClimb(0.3, 0.4);
 			BJKG A 0
 			{
 				if (invoker.WeaponStatus[BJProp_LoadType] == 1)
@@ -608,8 +608,8 @@ class HDBlackjack : HDWeapon
 			Goto ReloadEnd;
 
 		ReloadEnd:
-			BJKG A 4 Offset(30, 52);
-			BJKG A 3 Offset(20, 46);
+			BJKG A 2 Offset(30, 52);
+			BJKG A 2 Offset(20, 46);
 			BJKG A 2 Offset(10, 42);
 			BJKG A 2 Offset(5, 38);
 			BJKG A 1 Offset(0, 34);
