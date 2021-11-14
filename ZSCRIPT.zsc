@@ -87,22 +87,22 @@ class HDBlackjack : HDWeapon
 	override HDWeapon GetSpareWeapon(actor newowner, bool reverse, bool doselect) { return GetSpareWeaponRegular(newowner, reverse, doselect); }
 	override double GunMass()
 	{
-		double MagMass355 = WeaponStatus[BJProp_MagPrimary] > -1 ? 0.015 * WeaponStatus[BJProp_MagPrimary] : 0;
-		double MagMassShell = WeaponStatus[BJProp_MagSecondary] > -1 ? 0.03 * WeaponStatus[BJProp_MagSecondary] : 0;
-		return 8 + MagMass355 + MagMassShell;
+		double mass355 = WeaponStatus[BJProp_MagPrimary] > -1 ? 0.02 * WeaponStatus[BJProp_MagPrimary] : 0;
+		double massShell = WeaponStatus[BJProp_MagSecondary] > -1 ? 0.03 * WeaponStatus[BJProp_MagSecondary] : 0;
+		return 9.5 + mass355 + massShell;
 	}
 	override double WeaponBulk()
 	{
 		double BaseBulk = 115;
-		int MagPrim = WeaponStatus[BJProp_MagPrimary];
-		int MagSec = WeaponStatus[BJProp_MagSecondary];
-		if (MagPrim >= 0)
+		int prim = WeaponStatus[BJProp_MagPrimary];
+		int sec = WeaponStatus[BJProp_MagSecondary];
+		if (prim >= 0)
 		{
-			BaseBulk += HDBlackjackMag355.EncMagLoaded + MagPrim * ENC_355_LOADED;
+			BaseBulk += HDBlackjackMag355.EncMagLoaded + prim * ENC_355_LOADED;
 		}
-		if (MagSec >= 0)
+		if (sec >= 0)
 		{
-			BaseBulk += HDBlackjackMagShells.EncMagLoaded + MagSec * ENC_SHELLLOADED;
+			BaseBulk += HDBlackjackMagShells.EncMagLoaded + sec * ENC_SHELLLOADED;
 		}
 		return BaseBulk;
 	}
@@ -690,7 +690,7 @@ class HDBlackjackMag355 : HDMagAmmo
 	}
 
 	const MagCapacity = 25;
-	const EncMagEmpty = 12;
+	const EncMagEmpty = 9;
 	const EncMagLoaded = EncMagEmpty * 0.9;
 
 	Default
@@ -737,7 +737,7 @@ class HDBlackjackMagShells : HDMagAmmo
 	}
 
 	const MagCapacity = 5;
-	const EncMagEmpty = 14;
+	const EncMagEmpty = 9;
 	const EncMagLoaded = EncMagEmpty * 0.9;
 
 	Default
