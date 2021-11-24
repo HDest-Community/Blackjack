@@ -1,5 +1,5 @@
 Blackjack/Fire BJCKFIRE
-$pitchset Blackjack/Fire 1.5
+$pitchset Blackjack/Fire 0.9
 
 $alias Blackjack/AltFire weapons/hunter
 Blackjack/MagIn BJCKMGIN
