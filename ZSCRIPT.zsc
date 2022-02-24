@@ -74,13 +74,17 @@ class HDBlackjack : HDWeapon
 		Super.PostBeginPlay();
 	}
 
-	override void DoEffect()
+	override void Tick()
 	{
-		if (!InvertFire)
+		Super.Tick();
+		if (InvertFire && !owner)
+		{
+			InvertFire = null;
+		}
+		if (!InvertFire && owner)
 		{
 			InvertFire = CVar.GetCVar('bj_invert', owner.player);
 		}
-		Super.DoEffect();
 	}
 
 	override bool AddSpareWeapon(actor newowner) { return AddSpareWeaponRegular(newowner); }
@@ -122,10 +126,6 @@ class HDBlackjack : HDWeapon
 
 	override string GetHelpText()
 	{
-		if (!InvertFire)
-		{
-			InvertFire = CVar.GetCVar('bj_invert', owner.player);
-		}
 		string prim = InvertFire.GetBool() ? "shotgun" : "rifle";
 		string sec = InvertFire.GetBool() ? "rifle" : "shotgun";
 
