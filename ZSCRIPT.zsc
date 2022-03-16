@@ -134,7 +134,7 @@ class HDBlackjack : HDWeapon
 		..WEPHELP_RELOAD.."  Reload "..prim.." mag\n"
 		..WEPHELP_ALTRELOAD.."  Reload "..sec.." mag\n"
 		..WEPHELP_UNLOAD.. "  Unload "..prim.." mag\n"
-		..WEPHELP_FIREMODE.."+"..WEPHELP_UNLOAD.. "  Unload "..sec.." mag\n"
+		..WEPHELP_USE.."+"..WEPHELP_UNLOAD.. "  Unload "..sec.." mag\n"
 		..WEPHELP_USE.."+"..WEPHELP_RELOAD.."  Reload "..prim.." chamber\n"
 		..WEPHELP_USE.."+"..WEPHELP_ALTRELOAD.."  Reload "..sec.." chamber\n"
 		.."("..WEPHELP_USE..")+"..WEPHELP_MAGMANAGER);
@@ -420,7 +420,7 @@ class HDBlackjack : HDWeapon
 			BJKG A 0
 			{
 				bool invert = invoker.InvertFire.GetBool();
-				bool sec = PressingFiremode() && !invert || !PressingFiremode() && invert;
+				bool sec = PressingUse() && !invert || !PressingUse() && invert;
 
 				invoker.WeaponStatus[BJProp_Flags] |= BJF_JustUnload;
 				invoker.WeaponStatus[BJProp_LoadType] = sec ? 2 : 1;
