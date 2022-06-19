@@ -339,7 +339,7 @@ class HDBlackjack : HDWeapon
 		RealFire:
 			BJKF A 1 Bright
 			{
-				HDBulletActor.FireBullet(self, "HDB_355", spread: 1.25, speedfactor: 1.15);
+				HDBulletActor.FireBullet(self, 'HDB_355', spread: 1.25, speedfactor: 1.15);
 				A_AlertMonsters();
 				invoker.WeaponStatus[BJProp_ChamberPrimary] = 1;
 				A_StartSound("Blackjack/Fire", CHAN_WEAPON);
@@ -357,7 +357,7 @@ class HDBlackjack : HDWeapon
 
 				if (invoker.WeaponStatus[BJProp_MagPrimary] <= 0)
 				{
-					SetWeaponState("Nope");
+					SetWeaponState('Nope');
 				}
 				else
 				{
@@ -402,7 +402,7 @@ class HDBlackjack : HDWeapon
 
 				if (invoker.WeaponStatus[BJProp_MagSecondary] <= 0)
 				{
-					SetWeaponState("Nope");
+					SetWeaponState('Nope');
 				}
 				else
 				{
@@ -426,16 +426,16 @@ class HDBlackjack : HDWeapon
 				invoker.WeaponStatus[BJProp_LoadType] = sec ? 2 : 1;
 				if (!sec && invoker.WeaponStatus[BJProp_MagPrimary] >= 0 || sec && invoker.WeaponStatus[BJProp_MagSecondary] >= 0)
 				{
-					SetWeaponState("UnMag");
+					SetWeaponState('UnMag');
 				}
 				else if (!sec && invoker.WeaponStatus[BJProp_ChamberPrimary] > 0 || sec && invoker.WeaponStatus[BJProp_ChamberSecondary] > 0)
 				{
-					SetWeaponState("UnloadChamber");
+					SetWeaponState('UnloadChamber');
 				}
 			}
 			Goto Nope;
 		UnloadChamber:
-			BJKG A 1 A_JumpIf(invoker.WeaponStatus[BJProp_LoadType] == 1 && invoker.WeaponStatus[BJProp_ChamberPrimary] == 0 || invoker.WeaponStatus[BJProp_LoadType] == 2 && invoker.WeaponStatus[BJProp_ChamberSecondary] == 0, "Nope");
+			BJKG A 1 A_JumpIf(invoker.WeaponStatus[BJProp_LoadType] == 1 && invoker.WeaponStatus[BJProp_ChamberPrimary] == 0 || invoker.WeaponStatus[BJProp_LoadType] == 2 && invoker.WeaponStatus[BJProp_ChamberSecondary] == 0, 'Nope');
 			BJKG A 4 Offset(2, 34)
 			{
 				A_StartSound("Blackjack/BoltPull", 8);
@@ -444,13 +444,13 @@ class HDBlackjack : HDWeapon
 			{
 				if (invoker.WeaponStatus[BJProp_LoadType] == 1)
 				{
-					class<Actor> Which = invoker.WeaponStatus[BJProp_ChamberPrimary] > 1 ? "HDRevolverAmmo" : "HDSpent355";
+					class<Actor> Which = invoker.WeaponStatus[BJProp_ChamberPrimary] > 1 ? 'HDRevolverAmmo' : 'HDSpent355';
 					A_SpawnItemEx(Which, cos(pitch) * 10, 0, height - 8 - sin(pitch) * 10, vel.x, vel.y, vel.z, 0, SXF_ABSOLUTEMOMENTUM | SXF_NOCHECKPOSITION | SXF_TRANSFERPITCH);
 					invoker.WeaponStatus[BJProp_ChamberPrimary] = 0;
 				}
 				else if (invoker.WeaponStatus[BJProp_LoadType] == 2)
 				{
-					class<Actor> Which = invoker.WeaponStatus[BJProp_ChamberSecondary] > 1 ? "HDShellAmmo" : "HDSpentShell";
+					class<Actor> Which = invoker.WeaponStatus[BJProp_ChamberSecondary] > 1 ? 'HDShellAmmo' : 'HDSpentShell';
 					A_SpawnItemEx(Which, cos(pitch) * 8, 0, height - 7 - sin(pitch) * 8, vel.x + cos(pitch) * cos(angle - random(86, 90)) * 5, vel.y + cos(pitch) * sin(angle - random(86, 90)) * 5, vel.z + sin(pitch) * random(4, 6), 0, SXF_ABSOLUTEMOMENTUM | SXF_NOCHECKPOSITION | SXF_TRANSFERPITCH);
 					invoker.WeaponStatus[BJProp_ChamberSecondary] = 0;
 				}
@@ -466,7 +466,7 @@ class HDBlackjack : HDWeapon
 
 				invoker.WeaponStatus[BJProp_Flags] &= ~BJF_JustUnload;
 				bool sec = !invert && PressingAltReload() || invert && !PressingAltReload();
-				bool NoMags = HDMagAmmo.NothingLoaded(self, sec ? "HDBlackjackMagShells" : "HDBlackjackMag355");
+				bool NoMags = HDMagAmmo.NothingLoaded(self, sec ? 'HDBlackjackMagShells' : 'HDBlackjackMag355');
 				int magPrim = invoker.WeaponStatus[BJProp_MagPrimary];
 				int magSec = invoker.WeaponStatus[BJProp_MagSecondary];
 				int chPrim = invoker.WeaponStatus[BJProp_ChamberPrimary];
@@ -474,17 +474,17 @@ class HDBlackjack : HDWeapon
 
 				if (!sec && magPrim >= HDBlackjackMag355.MagCapacity || sec && magSec >= HDBlackjackMagShells.MagCapacity)
 				{
-					SetWeaponState("Nope");
+					SetWeaponState('Nope');
 				}
 				else if (PressingUse() || NoMags)
 				{
 					if (!sec && chPrim < 1 && CheckInventory("HDRevolverAmmo", 1) || sec && chSec < 1 && CheckInventory("HDShellAmmo", 1))
 					{
-						SetWeaponState("LoadChamber");
+						SetWeaponState('LoadChamber');
 					}
 					else
 					{
-						SetWeaponState("Nope");
+						SetWeaponState('Nope');
 					}
 				}
 				invoker.WeaponStatus[BJProp_LoadType] = sec ? 2 : 1;
@@ -501,13 +501,13 @@ class HDBlackjack : HDWeapon
 			{
 				if (invoker.WeaponStatus[BJProp_LoadType] == 1 && CheckInventory("HDRevolverAmmo", 1))
 				{
-					A_TakeInventory("HDRevolverAmmo", 1, TIF_NOTAKEINFINITE);
+					A_TakeInventory('HDRevolverAmmo', 1, TIF_NOTAKEINFINITE);
 					invoker.WeaponStatus[BJProp_ChamberPrimary] = 2;
 					A_StartSound("Blackjack/ChamberQuick", 8);
 				}
 				else if (invoker.WeaponStatus[BJProp_LoadType] == 2 && CheckInventory("HDShellAmmo", 1))
 				{
-					A_TakeInventory("HDShellAmmo", 1, TIF_NOTAKEINFINITE);
+					A_TakeInventory('HDShellAmmo', 1, TIF_NOTAKEINFINITE);
 					invoker.WeaponStatus[BJProp_ChamberSecondary] = 2;
 					A_StartSound("Blackjack/ChamberQuick", 8);
 				}
@@ -534,49 +534,26 @@ class HDBlackjack : HDWeapon
 			}
 			BJKG A 0
 			{
-				if (invoker.WeaponStatus[BJProp_LoadType] == 1)
+				int type = invoker.WeaponStatus[BJProp_LoadType];
+				int magAmt = invoker.WeaponStatus[type == 1 ? BJProp_MagPrimary : BJProp_MagSecondary];
+				if (magAmt == -1)
 				{
-					int MagAmount = invoker.WeaponStatus[BJProp_MagPrimary];
-					if (MagAmount == -1)
-					{
-						SetWeaponState("MagOut");
-						return;
-					}
-
-					invoker.WeaponStatus[BJProp_MagPrimary] = -1;
-					if ((!PressingUnload() && !PressingReload()) || A_JumpIfInventory("HDBlackjackMag355", 0, "Null"))
-					{
-						HDMagAmmo.SpawnMag(self, "HDBlackjackMag355", MagAmount);
-						SetWeaponState("MagOut");
-					}
-					else
-					{
-						HDMagAmmo.GiveMag(self, "HDBlackjackMag355", MagAmount);
-						A_StartSound("weapons/pocket", 9);
-						SetWeaponState("PocketMag");
-					}
+					SetWeaponState('MagOut');
+					return;
 				}
-				else if (invoker.WeaponStatus[BJProp_LoadType] == 2)
-				{
-					int MagAmount = invoker.WeaponStatus[BJProp_MagSecondary];
-					if (MagAmount == -1)
-					{
-						SetWeaponState("MagOut");
-						return;
-					}
 
-					invoker.WeaponStatus[BJProp_MagSecondary] = -1;
-					if ((!PressingUnload() && !PressingAltReload()) || A_JumpIfInventory("HDBlackjackMagShells", 0, "Null"))
-					{
-						HDMagAmmo.SpawnMag(self, "HDBlackjackMagShells", MagAmount);
-						SetWeaponState("MagOut");
-					}
-					else
-					{
-						HDMagAmmo.GiveMag(self, "HDBlackjackMagShells", MagAmount);
-						A_StartSound("weapons/pocket", 9);
-						SetWeaponState("PocketMag");
-					}
+				invoker.WeaponStatus[type == 1 ? BJProp_MagPrimary : BJProp_MagSecondary] = -1;
+				class<HDMagAmmo> magCls = type == 1 ? 'HDBlackjackMag355' : 'HDBlackjackMagShells';
+
+				if ((!PressingUnload() && !PressingReload() && !PressingAltReload()) || A_JumpIfInventory(magCls, 0, "Null"))
+				{
+					HDMagAmmo.SpawnMag(self, magCls, magAmt);
+					SetWeaponState('MagOut');
+				}
+				else
+				{
+					HDMagAmmo.GiveMag(self, magCls, magAmt);
+					SetWeaponState('PocketMag');
 				}
 			}
 		PocketMag:
@@ -586,7 +563,7 @@ class HDBlackjack : HDWeapon
 			{
 				if (invoker.WeaponStatus[BJProp_Flags] & BJF_JustUnload)
 				{
-					SetWeaponState("ReloadEnd");
+					SetWeaponState('ReloadEnd');
 				}
 			}
 		LoadMag:
@@ -596,10 +573,10 @@ class HDBlackjack : HDWeapon
 			BJKG A 10 offset(32, 50);
 			BJKG A 3 offset(32, 49)
 			{
-				class<Inventory> whichCls = invoker.WeaponStatus[BJProp_LoadType] == 2 ? 'HDBlackjackMagShells' : 'HDBlackjackMag355';
-				int whichIndex = invoker.WeaponStatus[BJProp_LoadType] == 2 ? BJProp_MagSecondary : BJProp_MagPrimary;
-				let Mag = HDMagAmmo(FindInventory(whichCls));
-				if (Mag)
+				class<Inventory> whichCls = invoker.WeaponStatus[BJProp_LoadType] == 1 ? 'HDBlackjackMag355' : 'HDBlackjackMagShells';
+				int whichIndex = invoker.WeaponStatus[BJProp_LoadType] == 1 ? BJProp_MagPrimary : BJProp_MagSecondary;
+				let mag = HDMagAmmo(FindInventory(whichCls));
+				if (mag)
 				{
 					invoker.WeaponStatus[whichIndex] = Mag.TakeMag(true);
 					A_StartSound("Blackjack/MagIn", 8, CHANF_OVERLAP);
@@ -622,29 +599,18 @@ class HDBlackjack : HDWeapon
 			BJKG A 5 Offset(4, 44)
 			{
 				A_StartSound("Blackjack/BoltPull", 8, CHANF_OVERLAP);
-				if (invoker.WeaponStatus[BJProp_LoadType] == 1)
+				int type = invoker.WeaponStatus[BJProp_LoadType];
+				int magIndex = type == 1 ? BJProp_MagPrimary : BJProp_MagSecondary;
+				int chamberIndex = type == 1 ? BJProp_ChamberPrimary : BJProp_ChamberSecondary;
+				class<Actor> casingCls = type == 1 ? 'HDSpent355' : 'HDSpentShell';
+
+				if (invoker.WeaponStatus[chamberIndex] == 1)
 				{
-					if (invoker.WeaponStatus[BJProp_ChamberPrimary] == 1)
-					{
-						A_EjectCasing('HDSpent355', 6, -random(79, 81), frandom(6.0, 6.5));
-						invoker.WeaponStatus[BJProp_ChamberPrimary] = 0;
-					}
-
-					invoker.WeaponStatus[BJProp_MagPrimary]--;
-					invoker.WeaponStatus[BJProp_ChamberPrimary] = 2;
+					A_EjectCasing(casingCls, 6, -random(79, 81), frandom(6.0, 6.5));
 				}
-				else if (invoker.WeaponStatus[BJProp_LoadType] == 2)
-				{
-					if (invoker.WeaponStatus[BJProp_ChamberSecondary] == 1)
-					{
-						A_EjectCasing('HDSpentShell', 11, -random(79, 81), frandom(6.0, 6.5));
-						invoker.WeaponStatus[BJProp_ChamberSecondary] = 0;
-					}
-
-					invoker.WeaponStatus[BJProp_MagSecondary]--;
-					invoker.WeaponStatus[BJProp_ChamberSecondary] = 2;
-				}
-
+				
+				invoker.WeaponStatus[magIndex]--;
+				invoker.WeaponStatus[chamberIndex] = 2;
 				A_WeaponBusy();
 			}
 			BJKG A 2 Offset(3, 38);
